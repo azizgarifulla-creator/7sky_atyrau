@@ -19,14 +19,13 @@ export const Booking = () => {
   ];
 
   const openWhatsApp = (message: string) => {
-    const whatsappNumber = "7708000000"; // Replace with actual number
+    const whatsappNumber = "77789747122";
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
   };
 
   const openKaspi = () => {
-    // Kaspi RED link - replace with actual link
-    window.open('https://kaspi.kz/shop/info/merchant/7sky/', '_blank');
+    window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank');
   };
 
   return (
@@ -143,10 +142,10 @@ export const Booking = () => {
                     <Clock className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
                     <span className="text-foreground">{t('workingHours')}</span>
                   </div>
-                  <div className="flex items-center">
-                    <Phone className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                    <span className="text-foreground">{t('instagram')}</span>
-                  </div>
+                   <div className="flex items-center">
+                     <Phone className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
+                     <span className="text-foreground">+7 778 974 7122</span>
+                   </div>
                 </div>
               </CardContent>
             </Card>

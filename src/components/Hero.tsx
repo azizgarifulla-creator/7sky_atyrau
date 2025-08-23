@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, Star, MessageCircle } from 'lucide-react';
+import domeBackground from '@/assets/dome-background.jpg';
 
 export const Hero = () => {
   const { t } = useLanguage();
@@ -11,11 +12,18 @@ export const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with dome-inspired elements */}
-      <div className="absolute inset-0 bg-gradient-hero">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold/5 rounded-full blur-3xl"></div>
+      {/* Background with real dome photo */}
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm scale-110"
+          style={{ backgroundImage: `url(${domeBackground})` }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/80"></div>
+        <div className="absolute inset-0 bg-gradient-hero/20"></div>
+        {/* Enhanced decorative elements */}
+        <div className="absolute top-20 left-10 w-40 h-40 bg-primary/15 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-60 h-60 bg-accent/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gold/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
       <div className="container mx-auto px-4 pt-20 relative z-10">
@@ -35,16 +43,16 @@ export const Hero = () => {
             </p>
           </div>
 
-          {/* Special offer badge */}
+          {/* Enhanced special offer badge */}
           <div className="mb-12 animate-fade-in delay-300">
-            <div className="inline-block bg-gradient-dome border border-primary/30 rounded-2xl p-6 shadow-dome">
-              <div className="text-primary font-bold text-sm mb-2">
+            <div className="inline-block bg-gradient-dome border-2 border-primary/40 rounded-3xl p-8 shadow-dome backdrop-blur-sm">
+              <div className="text-primary font-bold text-lg mb-3">
                 {t('birthdayOffer')}
               </div>
-              <div className="text-2xl font-bold text-foreground mb-2">
+              <div className="text-3xl font-bold text-foreground mb-3 bg-gradient-sunset bg-clip-text text-transparent">
                 {t('birthdayDiscount')}
               </div>
-              <div className="text-accent font-semibold text-lg">
+              <div className="text-accent font-bold text-xl bg-muted/20 px-4 py-2 rounded-xl">
                 7SKY_ATYRAU
               </div>
             </div>

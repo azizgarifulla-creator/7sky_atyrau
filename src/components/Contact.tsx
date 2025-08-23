@@ -17,15 +17,15 @@ export const Contact = () => {
     {
       icon: MessageCircle,
       title: 'WhatsApp',
-      description: 'Для бронирования',
-      action: () => window.open('https://wa.me/7708000000', '_blank'),
+      description: '+7 778 974 7122',
+      action: () => window.open('https://wa.me/77789747122', '_blank'),
       gradient: 'from-primary/20 to-gold/20'
     },
     {
       icon: CreditCard,
       title: 'Kaspi RED',
       description: 'Оплата услуг',
-      action: () => window.open('https://kaspi.kz/shop/info/merchant/7sky/', '_blank'),
+      action: () => window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank'),
       gradient: 'from-accent/20 to-primary/20'
     }
   ];
@@ -112,7 +112,7 @@ export const Contact = () => {
                 <Button 
                   variant="dome" 
                   size="lg"
-                  onClick={() => window.open('https://wa.me/7708000000?text=Здравствуйте! Хочу узнать больше о 7th Sky.', '_blank')}
+                  onClick={() => window.open('https://wa.me/77789747122?text=Здравствуйте! Хочу узнать больше о 7th Sky.', '_blank')}
                 >
                   <MessageCircle className="w-5 h-5" />
                   Связаться с нами
