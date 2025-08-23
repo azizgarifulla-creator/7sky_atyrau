@@ -23,8 +23,8 @@ export const Contact = () => {
     },
     {
       icon: CreditCard,
-      title: 'Kaspi RED',
-      description: 'Оплата услуг',
+      title: t('kaspiRed'),
+      description: t('paymentServices'),
       action: () => window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank'),
       gradient: 'from-accent/20 to-primary/20'
     }
@@ -44,13 +44,13 @@ export const Contact = () => {
               {t('contact')}
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Свяжитесь с нами любым удобным способом
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            {t('contactDescription')}
           </p>
         </div>
 
         {/* Contact cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto mb-12 md:mb-16">
           {contactLinks.map((contact, index) => {
             const IconComponent = contact.icon;
             return (
@@ -59,14 +59,14 @@ export const Contact = () => {
                     onClick={contact.action}>
                 <div className={`absolute inset-0 bg-gradient-to-br ${contact.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
                 
-                <CardContent className="relative z-10 text-center p-8">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-sunset rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
-                    <IconComponent className="w-8 h-8 text-primary-foreground" />
+                <CardContent className="relative z-10 text-center p-6 md:p-8">
+                  <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 bg-gradient-sunset rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                    <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-primary-foreground" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                     {contact.title}
                   </h3>
-                  <p className="text-muted-foreground">{contact.description}</p>
+                  <p className="text-sm md:text-base text-muted-foreground">{contact.description}</p>
                 </CardContent>
               </Card>
             );
@@ -76,46 +76,47 @@ export const Contact = () => {
         {/* Location and hours */}
         <div className="max-w-4xl mx-auto">
           <Card className="border-border/50 shadow-elegant overflow-hidden">
-            <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-gold/10 p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-gold/10 p-6 md:p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 <div className="text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start mb-4">
-                    <MapPin className="w-6 h-6 text-primary mr-3" />
-                    <h3 className="text-xl font-bold text-foreground">Наш адрес</h3>
+                    <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary mr-3" />
+                    <h3 className="text-lg md:text-xl font-bold text-foreground">{t('ourAddress')}</h3>
                   </div>
-                  <p className="text-foreground/80 text-lg">{t('location')}</p>
-                  <p className="text-muted-foreground mt-2">
-                    Расположены на крыше здания с потрясающим видом на город
+                  <p className="text-foreground/80 text-base md:text-lg">{t('location')}</p>
+                  <p className="text-muted-foreground mt-2 text-sm md:text-base">
+                    {t('addressDescription')}
                   </p>
                 </div>
 
                 <div className="text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start mb-4">
-                    <Clock className="w-6 h-6 text-primary mr-3" />
-                    <h3 className="text-xl font-bold text-foreground">Время работы</h3>
+                    <Clock className="w-5 h-5 md:w-6 md:h-6 text-primary mr-3" />
+                    <h3 className="text-lg md:text-xl font-bold text-foreground">{t('workingTime')}</h3>
                   </div>
-                  <p className="text-foreground/80 text-lg">{t('workingHours')}</p>
-                  <p className="text-muted-foreground mt-2">
-                    Ежедневно для создания незабываемых вечеров
+                  <p className="text-foreground/80 text-base md:text-lg">{t('workingHours')}</p>
+                  <p className="text-muted-foreground mt-2 text-sm md:text-base">
+                    {t('workingDescription')}
                   </p>
                 </div>
               </div>
 
-              <div className="text-center mt-8 pt-8 border-t border-border/30">
+              <div className="text-center mt-6 md:mt-8 pt-6 md:pt-8 border-t border-border/30">
                 <div className="flex items-center justify-center mb-4">
-                  <Star className="w-6 h-6 text-primary mr-3" />
-                  <h3 className="text-xl font-bold text-foreground">7th Sky Rooftop Dome</h3>
+                  <Star className="w-5 h-5 md:w-6 md:h-6 text-primary mr-3" />
+                  <h3 className="text-lg md:text-xl font-bold text-foreground">{t('rooftopDome')}</h3>
                 </div>
-                <p className="text-muted-foreground mb-6">
-                  Создано в 2024 году для особенных моментов вашей жизни
+                <p className="text-muted-foreground mb-4 md:mb-6 text-sm md:text-base">
+                  {t('companyDescription')}
                 </p>
                 <Button 
                   variant="dome" 
                   size="lg"
-                  onClick={() => window.open('https://wa.me/77789747122?text=Здравствуйте! Хочу узнать больше о 7th Sky.', '_blank')}
+                  className="text-sm md:text-base px-6 md:px-8"
+                  onClick={() => window.open(`https://wa.me/77789747122?text=${t('bookNow')}! ${t('bookDescription')}`, '_blank')}
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  Связаться с нами
+                  <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+                  {t('contactUs')}
                 </Button>
               </div>
             </div>

@@ -11,11 +11,11 @@ export const Booking = () => {
   ];
 
   const quickBookingOptions = [
-    { icon: Users, text: 'Романтический вечер (2 чел.)', price: '20 000 ₸' },
-    { icon: Users, text: 'Компания друзей (3-6 чел.)', price: '28 000 ₸' },
-    { icon: Users, text: 'Большая компания (до 12 чел.)', price: '40 000 ₸' },
-    { icon: Users, text: 'Кино-вечер (пуфик)', price: '4 500 ₸' },
-    { icon: Users, text: 'Кино-вечер (стул)', price: '4 000 ₸' },
+    { icon: Users, text: t('romanticEvening'), price: '20 000 ₸' },
+    { icon: Users, text: t('friendsCompany'), price: '28 000 ₸' },
+    { icon: Users, text: t('largeCompany'), price: '40 000 ₸' },
+    { icon: Users, text: t('cinemaEveningPuff'), price: '4 500 ₸' },
+    { icon: Users, text: t('cinemaEveningChair'), price: '4 000 ₸' },
   ];
 
   const openWhatsApp = (message: string) => {
@@ -44,36 +44,36 @@ export const Booking = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Забронируйте ваш незабываемый вечер в небесных куполах
+            {t('bookDescription')}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Quick booking options */}
           <Card className="border-border/50 shadow-elegant">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-foreground flex items-center">
-                <Clock className="w-6 h-6 text-primary mr-3" />
-                Быстрое бронирование
+              <CardTitle className="text-xl md:text-2xl font-bold text-foreground flex items-center">
+                <Clock className="w-5 h-5 md:w-6 md:h-6 text-primary mr-3" />
+                {t('quickBooking')}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3">
               {quickBookingOptions.map((option, index) => {
                 const IconComponent = option.icon;
                 return (
                   <div key={index} 
-                       className="flex items-center justify-between p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer border border-transparent hover:border-primary/30"
-                       onClick={() => openWhatsApp(`Хочу забронировать: ${option.text} (${option.price})`)}>
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-gradient-sunset rounded-lg flex items-center justify-center mr-3">
-                        <IconComponent className="w-5 h-5 text-primary-foreground" />
+                       className="flex items-center justify-between p-3 md:p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all duration-300 cursor-pointer border border-transparent hover:border-primary/30 hover:shadow-md active:scale-[0.98]"
+                       onClick={() => openWhatsApp(`${t('bookNow')}: ${option.text} (${option.price})`)}>
+                    <div className="flex items-center min-w-0 flex-1">
+                      <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-sunset rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                        <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
                       </div>
-                      <div>
-                        <p className="font-semibold text-foreground">{option.text}</p>
-                        <p className="text-sm text-muted-foreground">Нажмите для бронирования</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-foreground text-sm md:text-base leading-tight">{option.text}</p>
+                        <p className="text-xs md:text-sm text-muted-foreground">{t('clickToBook')}</p>
                       </div>
                     </div>
-                    <div className="text-lg font-bold text-primary">{option.price}</div>
+                    <div className="text-base md:text-lg font-bold text-primary ml-2 flex-shrink-0">{option.price}</div>
                   </div>
                 );
               })}
@@ -81,27 +81,27 @@ export const Booking = () => {
           </Card>
 
           {/* Contact and payment info */}
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             {/* WhatsApp booking */}
             <Card className="border-border/50 shadow-elegant">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center">
-                  <MessageCircle className="w-6 h-6 text-primary mr-3" />
+                <CardTitle className="text-lg md:text-xl font-bold text-foreground flex items-center">
+                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-primary mr-3" />
                   {t('whatsappBooking')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  Напишите нам в WhatsApp для быстрого бронирования и уточнения деталей
+                <p className="text-muted-foreground mb-4 text-sm md:text-base">
+                  {t('whatsappDescription')}
                 </p>
                 <Button 
                   variant="dome" 
                   size="lg" 
-                  className="w-full"
-                  onClick={() => openWhatsApp('Здравствуйте! Хочу забронировать купол в 7th Sky.')}
+                  className="w-full text-sm md:text-base"
+                  onClick={() => openWhatsApp(`${t('bookNow')}! ${t('bookDescription')}`)}
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  Написать в WhatsApp
+                  <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+                  {t('writeToWhatsapp')}
                 </Button>
               </CardContent>
             </Card>
@@ -109,23 +109,23 @@ export const Booking = () => {
             {/* Kaspi RED */}
             <Card className="border-border/50 shadow-elegant">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center">
-                  <CreditCard className="w-6 h-6 text-primary mr-3" />
+                <CardTitle className="text-lg md:text-xl font-bold text-foreground flex items-center">
+                  <CreditCard className="w-5 h-5 md:w-6 md:h-6 text-primary mr-3" />
                   {t('kaspiRed')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  Удобная оплата через Kaspi RED
+                <p className="text-muted-foreground mb-4 text-sm md:text-base">
+                  {t('kaspiDescription')}
                 </p>
                 <Button 
                   variant="hero" 
                   size="lg" 
-                  className="w-full"
+                  className="w-full text-sm md:text-base"
                   onClick={openKaspi}
                 >
-                  <CreditCard className="w-5 h-5" />
-                  Оплатить через Kaspi
+                  <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
+                  {t('payThroughKaspi')}
                 </Button>
               </CardContent>
             </Card>
@@ -133,18 +133,18 @@ export const Booking = () => {
             {/* Location and hours */}
             <Card className="border-border/50 shadow-elegant">
               <CardContent className="pt-6">
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <MapPin className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                    <span className="text-foreground">{t('location')}</span>
+                <div className="space-y-3 md:space-y-4">
+                  <div className="flex items-start">
+                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm md:text-base leading-relaxed">{t('location')}</span>
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                    <span className="text-foreground">{t('workingHours')}</span>
+                  <div className="flex items-start">
+                    <Clock className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm md:text-base leading-relaxed">{t('workingHours')}</span>
                   </div>
-                   <div className="flex items-center">
-                     <Phone className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                     <span className="text-foreground">+7 778 974 7122</span>
+                   <div className="flex items-start">
+                     <Phone className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                     <span className="text-foreground text-sm md:text-base leading-relaxed">+7 778 974 7122</span>
                    </div>
                 </div>
               </CardContent>
@@ -153,15 +153,15 @@ export const Booking = () => {
         </div>
 
         {/* Time slots */}
-        <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-foreground mb-8">Доступное время</h3>
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-4 max-w-4xl mx-auto">
+        <div className="mt-12 md:mt-16 text-center">
+          <h3 className="text-xl md:text-2xl font-bold text-foreground mb-6 md:mb-8">{t('availableTime')}</h3>
+          <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-4 max-w-4xl mx-auto">
             {timeSlots.map((time) => (
               <Button
                 key={time}
                 variant="hero"
-                className="aspect-square"
-                onClick={() => openWhatsApp(`Хочу забронировать на ${time}`)}
+                className="aspect-square text-sm md:text-base font-medium"
+                onClick={() => openWhatsApp(`${t('bookNow')} ${time}`)}
               >
                 {time}
               </Button>

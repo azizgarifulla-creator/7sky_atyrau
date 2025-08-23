@@ -65,6 +65,30 @@ export const translations = {
     // Contact
     instagram: '@7sky_atyrau',
     followUs: 'Подписывайтесь на нас в Instagram',
+    
+    // Additional translations for booking and contact
+    bookDescription: 'Забронируйте ваш незабываемый вечер в небесных куполах',
+    quickBooking: 'Быстрое бронирование',
+    romanticEvening: 'Романтический вечер (2 чел.)',
+    friendsCompany: 'Компания друзей (3-6 чел.)',
+    largeCompany: 'Большая компания (до 12 чел.)',
+    cinemaEveningPuff: 'Кино-вечер (пуфик)',
+    cinemaEveningChair: 'Кино-вечер (стул)',
+    clickToBook: 'Нажмите для бронирования',
+    whatsappDescription: 'Напишите нам в WhatsApp для быстрого бронирования и уточнения деталей',
+    writeToWhatsapp: 'Написать в WhatsApp',
+    kaspiDescription: 'Удобная оплата через Kaspi RED',
+    payThroughKaspi: 'Оплатить через Kaspi',
+    availableTime: 'Доступное время',
+    contactDescription: 'Свяжитесь с нами любым удобным способом',
+    ourAddress: 'Наш адрес',
+    addressDescription: 'Расположены на крыше здания с потрясающим видом на город',
+    workingTime: 'Время работы',
+    workingDescription: 'Ежедневно для создания незабываемых вечеров',
+    rooftopDome: '7th Sky Rooftop Dome',
+    companyDescription: 'Создано в 2024 году для особенных моментов вашей жизни',
+    contactUs: 'Связаться с нами',
+    paymentServices: 'Оплата услуг',
   },
   
   en: {
@@ -131,6 +155,30 @@ export const translations = {
     // Contact
     instagram: '@7sky_atyrau',
     followUs: 'Follow us on Instagram',
+    
+    // Additional translations for booking and contact
+    bookDescription: 'Book your unforgettable evening in sky domes',
+    quickBooking: 'Quick Booking',
+    romanticEvening: 'Romantic evening (2 people)',
+    friendsCompany: 'Friends company (3-6 people)',
+    largeCompany: 'Large company (up to 12 people)',
+    cinemaEveningPuff: 'Cinema evening (bean bag)',
+    cinemaEveningChair: 'Cinema evening (chair)',
+    clickToBook: 'Click to book',
+    whatsappDescription: 'Write to us on WhatsApp for quick booking and details',
+    writeToWhatsapp: 'Write to WhatsApp',
+    kaspiDescription: 'Convenient payment via Kaspi RED',
+    payThroughKaspi: 'Pay through Kaspi',
+    availableTime: 'Available time',
+    contactDescription: 'Contact us in any convenient way',
+    ourAddress: 'Our address',
+    addressDescription: 'Located on the building rooftop with stunning city views',
+    workingTime: 'Working hours',
+    workingDescription: 'Daily to create unforgettable evenings',
+    rooftopDome: '7th Sky Rooftop Dome',
+    companyDescription: 'Created in 2024 for special moments of your life',
+    contactUs: 'Contact us',
+    paymentServices: 'Payment services',
   },
   
   kz: {
@@ -197,5 +245,29 @@ export const translations = {
     // Contact
     instagram: '@7sky_atyrau',
     followUs: 'Instagram-да бізді қадағалаңыз',
+    
+    // Additional translations for booking and contact
+    bookDescription: 'Аспан күмбездерінде ұмытылмас кешіңізді брондаңыз',
+    quickBooking: 'Жылдам брондау',
+    romanticEvening: 'Романтикалық кеш (2 адам)',
+    friendsCompany: 'Достар компаниясы (3-6 адам)',
+    largeCompany: 'Үлкен компания (12 адамға дейін)',
+    cinemaEveningPuff: 'Кино кеші (пуф)',
+    cinemaEveningChair: 'Кино кеші (орындық)',
+    clickToBook: 'Брондау үшін басыңыз',
+    whatsappDescription: 'Жылдам брондау және толық ақпарат алу үшін WhatsApp-қа жазыңыз',
+    writeToWhatsapp: 'WhatsApp-қа жазу',
+    kaspiDescription: 'Kaspi RED арқылы ыңғайлы төлем',
+    payThroughKaspi: 'Kaspi арқылы төлеу',
+    availableTime: 'Қол жетімді уақыт',
+    contactDescription: 'Бізбен қолайлы кез келген жолмен байланысыңыз',
+    ourAddress: 'Біздің мекенжайымыз',
+    addressDescription: 'Қаланың керемет көрінісі ашылатын ғимарат шатырында орналасқан',
+    workingTime: 'Жұмыс уақыты',
+    workingDescription: 'Ұмытылмас кештер жасау үшін күнделікті',
+    rooftopDome: '7th Sky шатыр күмбезі',
+    companyDescription: 'Өміріңіздің ерекше сәттері үшін 2024 жылы жасалған',
+    contactUs: 'Бізбен байланысу',
+    paymentServices: 'Қызметтер төлемі',
   }
 };
