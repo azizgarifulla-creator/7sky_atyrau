@@ -1,0 +1,198 @@
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+export const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center space-x-4">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">7th Sky</h1>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#home" className="text-foreground hover:text-primary transition-colors text-base font-medium">{t('home')}</a>
+            <a href="#packages" className="text-foreground hover:text-primary transition-colors text-base font-medium">{t('packages')}</a>
+            <a href="#services" className="text-foreground hover:text-primary transition-colors text-base font-medium">{t('services')}</a>
+            <a href="#contact" className="text-foreground hover:text-primary transition-colors text-base font-medium">{t('contact')}</a>
+          </nav>
+
+          <div className="hidden md:flex items-center space-x-4">
+            <LanguageSelector />
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 text-base font-medium">
+              {t('book')}
+            </Button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="flex md:hidden items-center space-x-2">
+            <LanguageSelector />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-foreground hover:text-primary p-2"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden py-4 border-t border-border">
+            <nav className="flex flex-col space-y-4">
+              <a href="#home" className="text-foreground hover:text-primary transition-colors text-lg font-medium px-2 py-1" onClick={() => setIsMenuOpen(false)}>{t('home')}</a>
+              <a href="#packages" className="text-foreground hover:text-primary transition-colors text-lg font-medium px-2 py-1" onClick={() => setIsMenuOpen(false)}>{t('packages')}</a>
+              <a href="#services" className="text-foreground hover:text-primary transition-colors text-lg font-medium px-2 py-1" onClick={() => setIsMenuOpen(false)}>{t('services')}</a>
+              <a href="#contact" className="text-foreground hover:text-primary transition-colors text-lg font-medium px-2 py-1" onClick={() => setIsMenuOpen(false)}>{t('contact')}</a>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground mx-2 mt-2 text-lg font-medium" onClick={() => setIsMenuOpen(false)}>
+                {t('book')}
+              </Button>
+            </nav>
+          </div>
+        )}import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ExternalLink, MessageCircle, CreditCard } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+export const Booking = () => {
+  const { t } = useLanguage();
+
+  const packages = [
+    {
+      title: t('romanticEvening'),
+      price: t('couplePrice'),
+      whatsappMessage: `${t('romanticEvening')} - ${t('couplePrice')}`
+    },
+    {
+      title: t('friendsCompany'),
+      price: t('smallGroupPrice'),
+      whatsappMessage: `${t('friendsCompany')} - ${t('smallGroupPrice')}`
+    },
+    {
+      title: t('largeCompany'),
+      price: t('largeGroupPrice'),
+      whatsappMessage: `${t('largeCompany')} - ${t('largeGroupPrice')}`
+    },
+    {
+      title: t('cinemaEveningPuff'),
+      price: t('cinemaTicketPuff'),
+      whatsappMessage: `${t('cinemaEveningPuff')} - ${t('cinemaTicketPuff')}`
+    },
+    {
+      title: t('cinemaEveningChair'),
+      price: t('cinemaTicketChair'),
+      whatsappMessage: `${t('cinemaEveningChair')} - ${t('cinemaTicketChair')}`
+    }
+  ];
+
+  return (
+    <section id="booking" className="py-12 sm:py-16 lg:py-24 bg-background relative overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-20"
+        style={{
+          backgroundImage: 'url(/src/assets/dome-background.jpg)',
+          filter: 'blur(8px)'
+        }}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
+            {t('quickBooking')}
+          </h2>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            {t('bookDescription')}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
+          {packages.map((pkg, index) => (
+            <Card key={index} className="bg-card/80 backdrop-blur-sm border-border hover:bg-card/90 transition-all duration-300 hover:scale-105">
+              <CardHeader className="pb-3 sm:pb-4">
+                <CardTitle className="text-lg sm:text-xl font-bold text-card-foreground text-center">
+                  {pkg.title}
+                </CardTitle>
+                <CardDescription className="text-sm sm:text-base text-muted-foreground text-center font-medium">
+                  {pkg.price}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button 
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm sm:text-base py-2 sm:py-3"
+                  onClick={() => window.open(`https://wa.me/77789747122?text=${encodeURIComponent(pkg.whatsappMessage)}`, '_blank')}
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  {t('clickToBook')}
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <Card className="bg-card/80 backdrop-blur-sm border-border">
+            <CardHeader className="pb-4 sm:pb-6">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-card-foreground flex items-center">
+                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-primary" />
+                WhatsApp
+              </CardTitle>
+              <CardDescription className="text-sm sm:text-base text-muted-foreground">
+                {t('whatsappDescription')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium text-sm sm:text-base py-2 sm:py-3"
+                onClick={() => window.open('https://wa.me/77789747122', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                {t('writeToWhatsapp')}
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card/80 backdrop-blur-sm border-border">
+            <CardHeader className="pb-4 sm:pb-6">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-card-foreground flex items-center">
+                <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-primary" />
+                Kaspi RED
+              </CardTitle>
+              <CardDescription className="text-sm sm:text-base text-muted-foreground">
+                {t('kaspiDescription')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium text-sm sm:text-base py-2 sm:py-3"
+                onClick={() => window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                {t('payThroughKaspi')}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="text-center mt-8 sm:mt-12">
+          <p className="text-base sm:text-lg text-muted-foreground mb-2">
+            {t('availableTime')}
+          </p>
+          <p className="text-lg sm:text-xl font-semibold text-foreground">
+            {t('workingHours')}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};һ
+      </div>
+    </header>
+  );
+};
