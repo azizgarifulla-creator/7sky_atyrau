@@ -89,6 +89,10 @@ export const translations = {
     companyDescription: 'Создано в 2024 году для особенных моментов вашей жизни',
     contactUs: 'Связаться с нами',
     paymentServices: 'Оплата услуг',
+    decoration: 'Праздничное оформление',
+    musicSetup: 'Музыкальное оформление',
+    flowers: 'Букет цветов',
+    photographer: 'Фотограф',
   },
   
   en: {
@@ -179,6 +183,10 @@ export const translations = {
     companyDescription: 'Created in 2024 for special moments of your life',
     contactUs: 'Contact us',
     paymentServices: 'Payment services',
+    decoration: 'Festive decoration',
+    musicSetup: 'Music setup',
+    flowers: 'Flower bouquet',
+    photographer: 'Photographer',
   },
   
   kz: {
@@ -269,5 +277,9 @@ export const translations = {
     companyDescription: 'Өміріңіздің ерекше сәттері үшін 2024 жылы жасалған',
     contactUs: 'Бізбен байланысу',
     paymentServices: 'Қызметтер төлемі',
+    decoration: 'Мереке безендіруі',
+    musicSetup: 'Музыкалық безендіру',
+    flowers: 'Гүл шоғы',
+    photographer: 'Фотограф',
   }
 };

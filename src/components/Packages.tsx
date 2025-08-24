@@ -2,9 +2,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Heart, Users, Sparkles, Music, Camera, Gift } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export const Packages = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const packages = [
     {
@@ -50,8 +52,14 @@ export const Packages = () => {
     }
   ];
 
-  const scrollToBooking = () => {
-    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+  const handleBooking = (packageId: string) => {
+    if (packageId === 'couple') {
+      navigate('/booking/small-dome');
+    } else if (packageId === 'small-group') {
+      navigate('/booking/small-dome');
+    } else if (packageId === 'large-group') {
+      navigate('/booking/large-dome');
+    }
   };
 
   return (
@@ -108,7 +116,7 @@ export const Packages = () => {
                     variant={pkg.popular ? "dome" : "hero"} 
                     size="lg" 
                     className="w-full"
-                    onClick={scrollToBooking}
+                    onClick={() => handleBooking(pkg.id)}
                   >
                     {t('bookNow')}
                   </Button>
@@ -138,7 +146,7 @@ export const Packages = () => {
             </div>
 
             <p className="text-muted-foreground mb-4">{t('howManySeats')}</p>
-            <Button variant="hero" size="lg" onClick={scrollToBooking}>
+            <Button variant="hero" size="lg" onClick={() => navigate('/booking/small-dome')}>
               <Gift className="w-5 h-5" />
               Забронировать кино-вечер
             </Button>
