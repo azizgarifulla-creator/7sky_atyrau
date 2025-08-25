@@ -117,7 +117,8 @@ const BookingLargeDome = () => {
 
       // Redirect to Kaspi with total amount
       setTimeout(() => {
-        window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank');
+        const kaspiUrl = `https://pay.kaspi.kz/pay/nultwafm?amount=${totalPrice}&comment=Бронирование купола - ${selectedTime}`;
+        window.location.href = kaspiUrl;
       }, 1500);
 
     } catch (error) {
