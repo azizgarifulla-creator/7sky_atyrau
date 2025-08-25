@@ -77,57 +77,18 @@ const BookingLargeDome = () => {
       return;
     }
 
-    setIsLoading(true);
+    // Log booking data for admin
+    console.info('Booking data:', {
+      dome_type: 'large',
+      selected_time: selectedTime,
+      phone,
+      wishes,
+      additional_services: additionalServices,
+      total_price: calculateTotal()
+    });
 
-    try {
-      const servicesPrice = additionalServices.reduce((total, serviceId) => {
-        const service = services.find(s => s.id === serviceId);
-        return total + (service ? service.numPrice : 0);
-      }, 0);
-
-      const totalPrice = BASE_PRICE + servicesPrice;
-
-      const selectedServices = additionalServices.map(serviceId => {
-        const service = services.find(s => s.id === serviceId);
-        return {
-          id: service?.id || '',
-          name: service?.name || '',
-          price: service?.price || ''
-        };
-      });
-
-      const bookingData = {
-        dome_type: 'large',
-        selected_time: selectedTime,
-        phone,
-        wishes,
-        additional_services: selectedServices,
-        base_price: BASE_PRICE,
-        services_price: servicesPrice,
-        total_price: totalPrice
-      };
-
-      // Log booking data (email functionality will be added later)
-      console.info('Booking prepared for admin email:', bookingData);
-
-      toast({
-        title: "Бронирование создано",
-        description: `Переходим к оплате суммы ${totalPrice.toLocaleString()} ₸...`,
-      });
-
-      // Redirect to Kaspi immediately  
-      window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
-
-    } catch (error) {
-      console.error('Booking error:', error);
-      toast({
-        title: "Ошибка",
-        description: "Не удалось создать бронирование. Попробуйте еще раз.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    // Redirect to Kaspi
+    window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
   };
 
   return (
@@ -336,10 +297,10 @@ const BookingLargeDome = () => {
                   size="lg" 
                   className="w-full text-lg"
                   onClick={handleBooking}
-                  disabled={!selectedTime || !phone || isLoading}
+                  disabled={!selectedTime || !phone}
                 >
                   <CreditCard className="w-5 h-5" />
-                  {isLoading ? 'Обработка...' : `Забронировать и оплатить ${calculateTotal().toLocaleString()} ₸`}
+                  {`Забронировать и оплатить ${calculateTotal().toLocaleString()} ₸`}
                 </Button>
               </div>
             </CardContent>
