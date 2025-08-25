@@ -39,13 +39,16 @@ const BookingSmallDome = () => {
   // Base price for small dome
   const BASE_PRICE = 20000;
 
-  // Calculate total price
-  const calculateTotal = () => {
-    const servicesPrice = additionalServices.reduce((total, serviceId) => {
-      const service = services.find(s => s.id === serviceId);
-      return total + (service ? service.numPrice : 0);
-    }, 0);
-    return BASE_PRICE + servicesPrice;
+  // WhatsApp notification function
+  const sendWhatsAppNotification = (bookingData: any) => {
+    const message = `Новое бронирование малого купола!
+Время: ${bookingData.selected_time}
+Телефон: ${bookingData.phone}
+Пожелания: ${bookingData.wishes || 'Нет'}
+Доп. услуги: ${bookingData.additional_services.length > 0 ? bookingData.additional_services.join(', ') : 'Нет'}`;
+    
+    const whatsappUrl = `https://wa.me/77789747122?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleServiceChange = (serviceId: string, checked: boolean) => {
@@ -77,52 +80,20 @@ const BookingSmallDome = () => {
       return;
     }
 
-    // Log booking data for admin
-    console.info('Booking data:', {
+    // Prepare booking data
+    const bookingData = {
       dome_type: 'small',
       selected_time: selectedTime,
       phone,
       wishes,
-      additional_services: additionalServices,
-      total_price: calculateTotal()
-    });
+      additional_services: additionalServices
+    };
 
-    console.log('Перенаправляем на Kaspi...');
-    
-    // Показать уведомление о переходе
-    toast({
-      title: "Переход на оплату",
-      description: "Переходим на Kaspi для оплаты...",
-    });
+    // Send WhatsApp notification
+    sendWhatsAppNotification(bookingData);
 
-    // Попробуем несколько способов перенаправления
-    try {
-      const kaspiUrl = 'https://pay.kaspi.kz/pay/nultwafm';
-      console.log('Kaspi URL:', kaspiUrl);
-      
-      // Способ 1: window.location.href
-      window.location.href = kaspiUrl;
-      
-      // Способ 2: если первый не сработал, попробуем через таймаут
-      setTimeout(() => {
-        window.open(kaspiUrl, '_self');
-      }, 100);
-      
-    } catch (error) {
-      console.error('Ошибка при переходе на Kaspi:', error);
-      
-      // Резервный способ - через window.open
-      try {
-        window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank');
-      } catch (e) {
-        console.error('Резервный способ тоже не сработал:', e);
-        toast({
-          title: "Ошибка",
-          description: "Не удалось перейти на страницу оплаты. Попробуйте перейти по ссылке вручную: https://pay.kaspi.kz/pay/nultwafm",
-          variant: "destructive"
-        });
-      }
-    }
+    // Redirect to Kaspi payment
+    window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
   };
 
   return (
@@ -287,40 +258,11 @@ const BookingSmallDome = () => {
                   </div>
                 )}
 
-                {/* Price breakdown */}
-                <div className="bg-muted/20 rounded-lg p-4 space-y-2">
-                  <h4 className="font-semibold text-foreground mb-2">Расчет стоимости:</h4>
-                  <div className="flex justify-between text-foreground/80">
-                    <span>Базовая стоимость купола:</span>
-                    <span>{BASE_PRICE.toLocaleString()} ₸</span>
-                  </div>
-                  {additionalServices.length > 0 && (
-                    <>
-                      <div className="text-sm text-foreground/60 mt-2 mb-1">Дополнительные услуги:</div>
-                      {additionalServices.map(serviceId => {
-                        const service = services.find(s => s.id === serviceId);
-                        if (!service) return null;
-                        return (
-                          <div key={serviceId} className="flex justify-between text-sm text-foreground/70 pl-4">
-                            <span>• {service.name}</span>
-                            <span>{service.numPrice.toLocaleString()} ₸</span>
-                          </div>
-                        );
-                      })}
-                    </>
-                  )}
-                  <div className="border-t border-border pt-2 mt-2">
-                    <div className="flex justify-between font-bold text-lg text-foreground">
-                      <span>ИТОГО К ОПЛАТЕ:</span>
-                      <span className="text-primary">{calculateTotal().toLocaleString()} ₸</span>
-                    </div>
-                  </div>
-                </div>
-                
+                {/* Simplified payment info */}
                 <div className="flex items-start space-x-3 p-4 bg-primary/10 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-foreground/80">
-                    После нажатия кнопки вы будете перенаправлены на Kaspi для оплаты суммы {calculateTotal().toLocaleString()} ₸.
+                    После нажатия кнопки вы будете перенаправлены на Kaspi для оплаты.
                   </p>
                 </div>
 
@@ -332,7 +274,7 @@ const BookingSmallDome = () => {
                   disabled={!selectedTime || !phone}
                 >
                   <CreditCard className="w-5 h-5" />
-                  {`Забронировать и оплатить ${calculateTotal().toLocaleString()} ₸`}
+                  Забронировать и оплатить через Kaspi
                 </Button>
               </div>
             </CardContent>

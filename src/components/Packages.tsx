@@ -146,7 +146,7 @@ export const Packages = () => {
             </div>
 
             <p className="text-muted-foreground mb-4">{t('howManySeats')}</p>
-            <Button variant="hero" size="lg" onClick={() => navigate('/booking/small-dome')}>
+            <Button variant="hero" size="lg" onClick={() => window.open('https://wa.me/77789747122?text=Здравствуйте! Хочу забронировать кино-вечер в 7th Sky', '_blank')}>
               <Gift className="w-5 h-5" />
               Забронировать кино-вечер
             </Button>
