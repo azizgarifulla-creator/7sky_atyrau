@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Clock, Users, Phone, MessageSquare, CreditCard, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { createClient } from '@supabase/supabase-js';
+
 
 const BookingSmallDome = () => {
   const { t } = useLanguage();
@@ -22,11 +22,6 @@ const BookingSmallDome = () => {
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Supabase client
-  const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL,
-    import.meta.env.VITE_SUPABASE_ANON_KEY
-  );
   
   // Временные слоты для маленького купола
   const timeSlots = [
@@ -112,14 +107,8 @@ const BookingSmallDome = () => {
         total_price: totalPrice
       };
 
-      // Send booking data to email function
-      const { data, error } = await supabase.functions.invoke('send-booking-email', {
-        body: { booking: bookingData }
-      });
-
-      if (error) {
-        throw error;
-      }
+      // Отправка email администратору временно отключена (нет настроек Supabase в фронтенде)
+      console.info('Booking prepared for admin email:', bookingData);
 
       toast({
         title: "Бронирование создано",
