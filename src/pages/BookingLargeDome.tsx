@@ -115,10 +115,8 @@ const BookingLargeDome = () => {
         description: `Переходим к оплате суммы ${totalPrice.toLocaleString()} ₸...`,
       });
 
-      // Redirect to Kaspi
-      setTimeout(() => {
-        window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
-      }, 1500);
+      // Redirect to Kaspi immediately  
+      window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
 
     } catch (error) {
       console.error('Booking error:', error);
