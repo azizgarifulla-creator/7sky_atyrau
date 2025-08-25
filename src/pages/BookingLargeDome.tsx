@@ -115,10 +115,9 @@ const BookingLargeDome = () => {
         description: `Переходим к оплате суммы ${totalPrice.toLocaleString()} ₸...`,
       });
 
-      // Redirect to Kaspi with total amount
+      // Redirect to Kaspi
       setTimeout(() => {
-        const kaspiUrl = `https://pay.kaspi.kz/pay/nultwafm?amount=${totalPrice}&comment=Бронирование купола - ${selectedTime}`;
-        window.location.href = kaspiUrl;
+        window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
       }, 1500);
 
     } catch (error) {
