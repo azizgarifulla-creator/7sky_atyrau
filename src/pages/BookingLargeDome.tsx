@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Clock, Users, Phone, MessageSquare, CreditCard, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { createClient } from '@supabase/supabase-js';
 
 const BookingLargeDome = () => {
   const { t } = useLanguage();
@@ -19,6 +20,13 @@ const BookingLargeDome = () => {
   const [phone, setPhone] = useState('');
   const [wishes, setWishes] = useState('');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Supabase client
+  const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_ANON_KEY
+  );
   
   // Временные слоты для большого купола (3 часа аренды)
   const timeSlots = [
@@ -29,13 +37,25 @@ const BookingLargeDome = () => {
   const bookedSlots = ['21:00-00:00'];
   
   const services = [
-    { id: 'decoration', name: t('decoration'), price: '8000 ₸' },
-    { id: 'music', name: t('musicSetup'), price: '5000 ₸' },
-    { id: 'flowers', name: t('flowers'), price: '12000 ₸' },
-    { id: 'photographer', name: t('photographer'), price: '20000 ₸' },
-    { id: 'karaoke', name: 'Караоке система', price: '7000 ₸' },
-    { id: 'dj', name: 'DJ и звуковое оборудование', price: '25000 ₸' }
+    { id: 'decoration', name: t('decoration'), price: '8000 ₸', numPrice: 8000 },
+    { id: 'music', name: t('musicSetup'), price: '5000 ₸', numPrice: 5000 },
+    { id: 'flowers', name: t('flowers'), price: '12000 ₸', numPrice: 12000 },
+    { id: 'photographer', name: t('photographer'), price: '20000 ₸', numPrice: 20000 },
+    { id: 'karaoke', name: 'Караоке система', price: '7000 ₸', numPrice: 7000 },
+    { id: 'dj', name: 'DJ и звуковое оборудование', price: '25000 ₸', numPrice: 25000 }
   ];
+
+  // Base price for large dome
+  const BASE_PRICE = 40000;
+
+  // Calculate total price
+  const calculateTotal = () => {
+    const servicesPrice = additionalServices.reduce((total, serviceId) => {
+      const service = services.find(s => s.id === serviceId);
+      return total + (service ? service.numPrice : 0);
+    }, 0);
+    return BASE_PRICE + servicesPrice;
+  };
 
   const handleServiceChange = (serviceId: string, checked: boolean) => {
     if (checked) {
@@ -45,7 +65,7 @@ const BookingLargeDome = () => {
     }
   };
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!selectedTime) {
       toast({
         title: "Ошибка",
@@ -64,13 +84,65 @@ const BookingLargeDome = () => {
       return;
     }
 
-    // Перенаправление на Kaspi
-    window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank');
-    
-    toast({
-      title: "Перенаправление на оплату",
-      description: "Вы будете перенаправлены на Kaspi для оплаты",
-    });
+    setIsLoading(true);
+
+    try {
+      const servicesPrice = additionalServices.reduce((total, serviceId) => {
+        const service = services.find(s => s.id === serviceId);
+        return total + (service ? service.numPrice : 0);
+      }, 0);
+
+      const totalPrice = BASE_PRICE + servicesPrice;
+
+      const selectedServices = additionalServices.map(serviceId => {
+        const service = services.find(s => s.id === serviceId);
+        return {
+          id: service?.id || '',
+          name: service?.name || '',
+          price: service?.price || ''
+        };
+      });
+
+      const bookingData = {
+        dome_type: 'large',
+        selected_time: selectedTime,
+        phone,
+        wishes,
+        additional_services: selectedServices,
+        base_price: BASE_PRICE,
+        services_price: servicesPrice,
+        total_price: totalPrice
+      };
+
+      // Send booking data to email function
+      const { data, error } = await supabase.functions.invoke('send-booking-email', {
+        body: { booking: bookingData }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Бронирование создано",
+        description: "Данные отправлены администратору. Переходим к оплате...",
+      });
+
+      // Redirect to Kaspi with total amount
+      setTimeout(() => {
+        window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank');
+      }, 1500);
+
+    } catch (error) {
+      console.error('Booking error:', error);
+      toast({
+        title: "Ошибка",
+        description: "Не удалось создать бронирование. Попробуйте еще раз.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -239,18 +311,48 @@ const BookingLargeDome = () => {
               <div className="space-y-4">
                 {selectedTime && (
                   <div className="bg-muted/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2">Ваше бронирование:</h4>
+                    <h4 className="font-semibold text-foreground mb-2">Детали бронирования:</h4>
                     <p className="text-foreground/80">Время: {selectedTime}</p>
                     <p className="text-foreground/80">Купол: Большой (до 12 человек)</p>
                     <p className="text-foreground/80">Длительность: 3 часа</p>
                   </div>
                 )}
+
+                {/* Price breakdown */}
+                <div className="bg-muted/20 rounded-lg p-4 space-y-2">
+                  <h4 className="font-semibold text-foreground mb-2">Расчет стоимости:</h4>
+                  <div className="flex justify-between text-foreground/80">
+                    <span>Базовая стоимость купола:</span>
+                    <span>{BASE_PRICE.toLocaleString()} ₸</span>
+                  </div>
+                  {additionalServices.length > 0 && (
+                    <>
+                      <div className="text-sm text-foreground/60 mt-2 mb-1">Дополнительные услуги:</div>
+                      {additionalServices.map(serviceId => {
+                        const service = services.find(s => s.id === serviceId);
+                        if (!service) return null;
+                        return (
+                          <div key={serviceId} className="flex justify-between text-sm text-foreground/70 pl-4">
+                            <span>• {service.name}</span>
+                            <span>{service.numPrice.toLocaleString()} ₸</span>
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
+                  <div className="border-t border-border pt-2 mt-2">
+                    <div className="flex justify-between font-bold text-lg text-foreground">
+                      <span>ИТОГО К ОПЛАТЕ:</span>
+                      <span className="text-primary">{calculateTotal().toLocaleString()} ₸</span>
+                    </div>
+                  </div>
+                </div>
                 
                 <div className="flex items-start space-x-3 p-4 bg-primary/10 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-foreground/80">
-                    После нажатия кнопки "Забронировать и оплатить" вы будете перенаправлены на Kaspi для оплаты. 
-                    После успешной оплаты ваше время будет забронировано.
+                    После нажатия кнопки бронирование будет отправлено администратору на почту, 
+                    затем вы будете перенаправлены на Kaspi для оплаты суммы {calculateTotal().toLocaleString()} ₸.
                   </p>
                 </div>
 
@@ -259,10 +361,10 @@ const BookingLargeDome = () => {
                   size="lg" 
                   className="w-full text-lg"
                   onClick={handleBooking}
-                  disabled={!selectedTime || !phone}
+                  disabled={!selectedTime || !phone || isLoading}
                 >
                   <CreditCard className="w-5 h-5" />
-                  Забронировать и оплатить через Kaspi
+                  {isLoading ? 'Отправка...' : `Забронировать и оплатить ${calculateTotal().toLocaleString()} ₸`}
                 </Button>
               </div>
             </CardContent>
