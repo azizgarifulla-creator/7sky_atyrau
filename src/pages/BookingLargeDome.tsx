@@ -11,7 +11,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Clock, Users, Phone, MessageSquare, CreditCard, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-
 const BookingLargeDome = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
@@ -22,7 +21,6 @@ const BookingLargeDome = () => {
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  
   // Временные слоты для большого купола (3 часа аренды)
   const timeSlots = [
     '18:00-21:00', '21:00-00:00', '00:00-03:00', '03:00-06:00'
@@ -109,12 +107,12 @@ const BookingLargeDome = () => {
         total_price: totalPrice
       };
 
-      // Отправка email администратору временно отключена (нет настроек Supabase в фронтенде)
+      // Log booking data (email functionality will be added later)
       console.info('Booking prepared for admin email:', bookingData);
 
       toast({
         title: "Бронирование создано",
-        description: "Данные отправлены администратору. Переходим к оплате...",
+        description: `Переходим к оплате суммы ${totalPrice.toLocaleString()} ₸...`,
       });
 
       // Redirect to Kaspi with total amount
@@ -340,8 +338,7 @@ const BookingLargeDome = () => {
                 <div className="flex items-start space-x-3 p-4 bg-primary/10 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-foreground/80">
-                    После нажатия кнопки бронирование будет отправлено администратору на почту, 
-                    затем вы будете перенаправлены на Kaspi для оплаты суммы {calculateTotal().toLocaleString()} ₸.
+                    После нажатия кнопки вы будете перенаправлены на Kaspi для оплаты суммы {calculateTotal().toLocaleString()} ₸.
                   </p>
                 </div>
 
@@ -353,7 +350,7 @@ const BookingLargeDome = () => {
                   disabled={!selectedTime || !phone || isLoading}
                 >
                   <CreditCard className="w-5 h-5" />
-                  {isLoading ? 'Отправка...' : `Забронировать и оплатить ${calculateTotal().toLocaleString()} ₸`}
+                  {isLoading ? 'Обработка...' : `Забронировать и оплатить ${calculateTotal().toLocaleString()} ₸`}
                 </Button>
               </div>
             </CardContent>
