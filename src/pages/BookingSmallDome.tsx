@@ -171,23 +171,14 @@ const BookingSmallDome = () => {
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {timeSlots.map((time) => {
-                  const isBooked = bookedSlots.includes(time);
                   return (
                     <Button
                       key={time}
-                      variant={selectedTime === time ? "dome" : isBooked ? "secondary" : "hero"}
-                      className={`h-16 text-lg font-semibold ${
-                        isBooked ? 'opacity-50 cursor-not-allowed' : ''
-                      }`}
-                      disabled={isBooked}
-                      onClick={() => !isBooked && setSelectedTime(time)}
+                      variant={selectedTime === time ? "dome" : "hero"}
+                      className="h-16 text-lg font-semibold"
+                      onClick={() => setSelectedTime(time)}
                     >
                       {time}
-                      {isBooked && (
-                        <div className="text-xs text-muted-foreground mt-1">
-                          Забронировано
-                        </div>
-                      )}
                     </Button>
                   );
                 })}
