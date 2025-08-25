@@ -57,6 +57,8 @@ const BookingSmallDome = () => {
   };
 
   const handleBooking = async () => {
+    console.log('handleBooking вызвана');
+    
     if (!selectedTime) {
       toast({
         title: "Ошибка",
@@ -85,8 +87,42 @@ const BookingSmallDome = () => {
       total_price: calculateTotal()
     });
 
-    // Redirect to Kaspi
-    window.location.href = 'https://pay.kaspi.kz/pay/nultwafm';
+    console.log('Перенаправляем на Kaspi...');
+    
+    // Показать уведомление о переходе
+    toast({
+      title: "Переход на оплату",
+      description: "Переходим на Kaspi для оплаты...",
+    });
+
+    // Попробуем несколько способов перенаправления
+    try {
+      const kaspiUrl = 'https://pay.kaspi.kz/pay/nultwafm';
+      console.log('Kaspi URL:', kaspiUrl);
+      
+      // Способ 1: window.location.href
+      window.location.href = kaspiUrl;
+      
+      // Способ 2: если первый не сработал, попробуем через таймаут
+      setTimeout(() => {
+        window.open(kaspiUrl, '_self');
+      }, 100);
+      
+    } catch (error) {
+      console.error('Ошибка при переходе на Kaspi:', error);
+      
+      // Резервный способ - через window.open
+      try {
+        window.open('https://pay.kaspi.kz/pay/nultwafm', '_blank');
+      } catch (e) {
+        console.error('Резервный способ тоже не сработал:', e);
+        toast({
+          title: "Ошибка",
+          description: "Не удалось перейти на страницу оплаты. Попробуйте перейти по ссылке вручную: https://pay.kaspi.kz/pay/nultwafm",
+          variant: "destructive"
+        });
+      }
+    }
   };
 
   return (
